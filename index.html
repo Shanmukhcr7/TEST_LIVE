@@ -127,8 +127,11 @@
       }
 
       /********** WebSocket for live viewers **********/
-      const viewerCountEl = document.getElementById('viewerCount');
-      const ws = new WebSocket(`ws://${window.location.host}`);
+      /********** WebSocket for live viewers **********/
+const viewerCountEl = document.getElementById('viewerCount');
+const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+const ws = new WebSocket(`${protocol}://${window.location.host}`);
+
 
       ws.onmessage = (event) => {
         try {
