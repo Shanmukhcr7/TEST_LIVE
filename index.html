@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Star Sports Hindi HD</title>
+  <title>Star Sports 2 HD</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.11/shaka-player.ui.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.11/controls.min.css" crossorigin="anonymous">
@@ -54,7 +54,7 @@
       text-align: center;
     }
 
-    /* Modal */
+    /* Chrome Modal */
     .modal {
       position: fixed;
       top: 0;
@@ -87,14 +87,11 @@
     @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
     @keyframes scaleIn { to { transform: scale(1); opacity: 1 } }
 
-    /* Chrome Modal Red */
     #chromeModal .modal-content {
       background: rgba(255, 0, 0, 0.1);
       border: 1px solid rgba(255, 0, 0, 0.3);
     }
-    #chromeModal h2 {
-      color: #f87171;
-    }
+    #chromeModal h2 { color: #f87171; }
   </style>
 </head>
 
@@ -163,15 +160,8 @@
           'spacer', 'language', 'captions', 'picture_in_picture',
           'quality', 'fullscreen'
         ],
-        volumeBarColors: {
-          base: 'rgba(63, 187, 1, 1)',
-          level: 'rgb(255, 69, 0)'
-        },
-        seekBarColors: {
-          base: 'rgb(41, 41, 163)',
-          buffered: 'rgb(35, 99, 3)',
-          played: 'rgba(63, 187, 1, 1)'
-        }
+        volumeBarColors: { base: 'rgba(63, 187, 1, 1)', level: 'rgb(255, 69, 0)' },
+        seekBarColors: { base: 'rgb(41, 41, 163)', buffered: 'rgb(35, 99, 3)', played: 'rgba(63, 187, 1, 1)' }
       });
 
       let drmConfig = {
@@ -180,7 +170,7 @@
         }
       };
 
-      let cookieHeader = "__hdnea__=st=1759921257~exp=1760007657~acl=/*~hmac=46438192160cfdee12db400384ebd33c29961511fb0462affab07149d0010245";
+      let cookieHeader = "__hdnea__=st=1760011230~exp=1760097630~acl=/*~hmac=2ed54022760d33618dcc7b2fd8497ddf82be3023565ad88ab26fca0a78323423";
       let streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Star_Sports_HD2_BTS/output/index.mpd";
 
       try {
@@ -189,22 +179,18 @@
         const lines = m3uText.split('\n');
 
         for (let i = 0; i < lines.length; i++) {
-          if (lines[i].includes('Star_Sports_HD2')) {
+          if (lines[i].includes('Star_Sports_HD1')) {
             for (let j = i - 1; j >= 0; j--) {
               if (lines[j].startsWith('#EXTHTTP:')) {
                 const cookieMatch = lines[j].match(/"cookie":"([^"]+)"/);
-                if (cookieMatch) {
-                  cookieHeader = cookieMatch[1];
-                }
+                if (cookieMatch) cookieHeader = cookieMatch[1];
                 break;
               }
             }
             break;
           }
         }
-      } catch (error) {
-        console.error('Failed to fetch M3U:', error);
-      }
+      } catch (error) { console.error('Failed to fetch M3U:', error); }
 
       player.configure({
         drm: drmConfig,
@@ -226,11 +212,9 @@
         request.headers['User-Agent'] = "plaYtv/7.1.5 (Linux;Android 13) ExoPlayerLib/2.11.6";
         request.headers['Cookie'] = cookieHeader;
 
-        if (
-          (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
-           type === shaka.net.NetworkingEngine.RequestType.SEGMENT) &&
-          request.uris[0] && !request.uris[0].includes('__hdnea__=')
-        ) {
+        if ((type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+             type === shaka.net.NetworkingEngine.RequestType.SEGMENT) &&
+            request.uris[0] && !request.uris[0].includes('__hdnea__=')) {
           const separator = request.uris[0].includes('?') ? '&' : '?';
           request.uris[0] += separator + cookieHeader;
         }
@@ -241,6 +225,7 @@
       } catch (error) {
         console.error('Load error:', error);
       }
+
     });
   </script>
 </body>
