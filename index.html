@@ -54,7 +54,7 @@
       text-align: center;
     }
 
-    /* Chrome Only Modal */
+    /* Chrome Modal */
     .modal {
       position: fixed;
       top: 0;
@@ -110,7 +110,7 @@
 
   <!-- Video Player -->
   <div class="shaka-video-container" data-shaka-player>
-    <video autoplay playsinline preload="metadata" poster=""></video>
+    <video autoplay playsinline preload="metadata" poster="https://raw.githubusercontent.com/hardiksoni85555-max/images/refs/heads/main/open%20link%20in%20chrome.png"></video>
   </div>
 
   <script>
@@ -157,16 +157,24 @@
           'spacer', 'language', 'captions', 'picture_in_picture',
           'quality', 'fullscreen'
         ],
-        volumeBarColors: { base: 'rgba(63, 187, 1, 1)', level: 'rgb(255, 69, 0)' },
-        seekBarColors: { base: 'rgb(41, 41, 163)', buffered: 'rgb(35, 99, 3)', played: 'rgba(63, 187, 1, 1)' }
+        volumeBarColors: {
+          base: 'rgba(63, 187, 1, 1)',
+          level: 'rgb(255, 69, 0)'
+        },
+        seekBarColors: {
+          base: 'rgb(41, 41, 163)',
+          buffered: 'rgb(35, 99, 3)',
+          played: 'rgba(63, 187, 1, 1)'
+        }
       });
 
+      // Working DRM + Cookie Config
       let drmConfig = {
         clearKeys: {
           "9457eb90129456fa8ea95e10ba4ac51e": "e620a970cea474c491ac78ae71a4d764"
         }
       };
-      let cookieHeader = "__hdnea__=st=1760187629~exp=1760274029~acl=/*~hmac=3d0cc86638d3b0c748af750132c0d614c02fc6daca2a2847ea2fa87c32a67d81";
+      let cookieHeader = "__hdnea__=st=1760256032~exp=1760342432~acl=/*~hmac=0c12baaff4a955ce156464ff79fbc191a3756940448a435038e0142f266ed9da";
       let streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Star_Sports_HD2_BTS/output/index.mpd";
 
       try {
@@ -185,7 +193,9 @@
             break;
           }
         }
-      } catch (error) { console.error('Failed to fetch M3U:', error); }
+      } catch (error) {
+        console.error('Failed to fetch M3U:', error);
+      }
 
       player.configure({
         drm: drmConfig,
@@ -217,8 +227,9 @@
 
       try {
         await player.load(streamUrl);
+        console.log("✅ Stream loaded successfully");
       } catch (error) {
-        console.error('Load error:', error);
+        console.error('❌ Load error:', error);
       }
 
     });
